@@ -41,7 +41,14 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
 	// Swagger/OpenAPI
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'
+
+	// For Apache Tika (universal document parser)
+	implementation 'org.apache.tika:tika-core:2.9.0'
+	implementation 'org.apache.tika:tika-parsers-standard-package:2.9.0'
+
+	implementation 'org.apache.pdfbox:pdfbox:2.0.27'
+	implementation 'org.apache.poi:poi-ooxml:5.2.3'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'

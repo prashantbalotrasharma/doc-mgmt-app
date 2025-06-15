@@ -1,6 +1,7 @@
 package com.codewithmonks.docmgmt.exception;
 
 import com.codewithmonks.docmgmt.exception.custom.EmailAlreadyExistsException;
+import com.codewithmonks.docmgmt.exception.custom.InvalidFileFormatException;
 import com.codewithmonks.docmgmt.exception.custom.UsernameAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<?> handleEmailExists(EmailAlreadyExistsException ex) {
+        return new ResponseEntity<>(errorBody(ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidFileFormatException.class)
+    public ResponseEntity<?> handleEmailExists(InvalidFileFormatException ex) {
         return new ResponseEntity<>(errorBody(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
