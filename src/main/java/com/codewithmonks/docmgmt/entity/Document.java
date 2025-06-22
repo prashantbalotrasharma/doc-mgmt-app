@@ -33,8 +33,9 @@ public class Document {
     @Column(name = "file_data", columnDefinition = "BYTEA")
     private byte[] fileData;
 
-    @Lob
+//    @Lob
     @Column(columnDefinition = "TEXT")
+//    @Basic(fetch = FetchType.EAGER)
     private String extractedText;
 }
 

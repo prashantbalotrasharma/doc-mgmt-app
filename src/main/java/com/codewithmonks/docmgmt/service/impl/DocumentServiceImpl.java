@@ -38,6 +38,7 @@ public class DocumentServiceImpl implements DocumentService {
             byte[] fileBytes = file.getBytes();
 
             String extractedText = FileTextExtractor.extractText(file.getInputStream());
+            log.info("Extracted text: {}", extractedText);
 
             Document doc = Document.builder()
                     .filename(file.getOriginalFilename())
