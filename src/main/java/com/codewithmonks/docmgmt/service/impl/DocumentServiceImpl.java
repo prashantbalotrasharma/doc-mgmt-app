@@ -1,14 +1,20 @@
 package com.codewithmonks.docmgmt.service.impl;
 
+import com.codewithmonks.docmgmt.dto.DocumentFilterRequest;
 import com.codewithmonks.docmgmt.dto.DocumentMetadataDTO;
 import com.codewithmonks.docmgmt.dto.UploadResponse;
 import com.codewithmonks.docmgmt.entity.Document;
 import com.codewithmonks.docmgmt.repository.DocumentRepository;
 import com.codewithmonks.docmgmt.service.DocumentService;
+import com.codewithmonks.docmgmt.util.DocumentSpecification;
 import com.codewithmonks.docmgmt.util.FileTextExtractor;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -64,6 +70,17 @@ public class DocumentServiceImpl implements DocumentService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("File upload failed due to an internal error.");
         }
+    }
+
+    @Override
+    public Page<Document> filterDocuments(DocumentFilterRequest request) {
+        Pageable pageable = PageRequest.of(
+                request.getPage(),
+                request.getSize(),
+                Sort.by(Sort.Direction.fromString(request.getSortDirection()), request.getSortBy())
+        );
+
+        return documentRepository.findAll(DocumentSpecification.build(request), pageable);
     }
 
 }

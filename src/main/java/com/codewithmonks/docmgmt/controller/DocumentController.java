@@ -1,13 +1,13 @@
 package com.codewithmonks.docmgmt.controller;
 
+import com.codewithmonks.docmgmt.dto.DocumentFilterRequest;
 import com.codewithmonks.docmgmt.dto.DocumentMetadataDTO;
+import com.codewithmonks.docmgmt.entity.Document;
 import com.codewithmonks.docmgmt.service.DocumentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -27,6 +27,12 @@ public class DocumentController {
     ) throws IOException {
         DocumentMetadataDTO metadata = new DocumentMetadataDTO(author, title);
         return documentService.uploadDocument(file, metadata);
+    }
+
+    @PostMapping("/filter")
+    public ResponseEntity<Page<Document>> filterDocuments(@RequestBody DocumentFilterRequest request) {
+        Page<Document> docs = documentService.filterDocuments(request);
+        return ResponseEntity.ok(docs);
     }
 }
 
